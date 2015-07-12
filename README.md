@@ -1,0 +1,2 @@
+# TweetOnDroid
+TweetOnDroid is a web application that visualizes all the results of Twitter sentiment analysis performed on Android version 5: Lollipop. About 30000 unique tweets were collected over a period of 2 months to see how eager, how excited and how happy were users who were waiting or who updated to Android L. #AndroidL, #AndroidLollipop, #Android5 were the hashtags used to download the tweets.
