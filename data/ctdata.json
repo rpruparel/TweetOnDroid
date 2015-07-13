@@ -1,0 +1,214 @@
+{
+    "name": "Alphabets",
+    "children": [{
+        "name": "A",
+        "children": [{
+            "name": "ascend",
+            "size": 254
+        }, {
+            "name": "awesome",
+            "size": 162
+        }]
+    }, {
+        "name": "B",
+        "children": [{
+            "name": "blog",
+            "size": 789
+        }, {
+            "name": "box",
+            "size": 192
+        }]
+    }, {
+        "name": "C",
+        "children": [{
+            "name": "comparision",
+            "size": 788
+        }, {
+            "name": "core",
+            "size": 242
+        }]
+    }, {
+        "name": "E",
+        "children": [{
+            "name": "easter",
+            "size": 201
+        }, {
+            "name": "eggs",
+            "size": 199
+        }]
+    }, {
+        "name": "F",
+        "children": [{
+            "name": "finally",
+            "size": 231
+        }]
+    }, {
+        "name": "G",
+        "children": [{
+            "name": "galaxy",
+            "size": 363
+        }, {
+            "name": "google",
+            "size": 242
+        }, {
+            "name": "gingerbread",
+            "size": 203
+        }, {
+            "name": "get",
+            "size": 200
+        }, {
+            "name": "got",
+            "size": 161
+        }]
+    }, {
+        "name": "H",
+        "children": [{
+            "name": "hidden",
+            "size": 201
+        }, {
+            "name": "hd",
+            "size": 196
+        }]
+    }, {
+        "name": "I",
+        "children": [{
+            "name": "ios",
+            "size": 843
+        }, {
+            "name": "interesting",
+            "size": 792
+        }, {
+            "name": "inch",
+            "size": 217
+        }, {
+            "name": "ips",
+            "size": 211
+        }]
+    }, {
+        "name": "L",
+        "children": [{
+            "name": "look",
+            "size": 841
+        }, {
+            "name": "lg",
+            "size": 417
+        }, {
+            "name": "launched",
+            "size": 331
+        }, {
+            "name": "like",
+            "size": 203
+        }, {
+            "name": "lcd",
+            "size": 190
+        }]
+    }, {
+        "name": "N",
+        "children": [{
+            "name": "new",
+            "size": 366
+        }, {
+            "name": "now",
+            "size": 347
+        }, {
+            "name": "nexus",
+            "size": 319
+        }, {
+            "name": "note",
+            "size": 296
+        }, {
+            "name": "not",
+            "size": 187
+        }]
+    }, {
+        "name": "O",
+        "children": [{
+            "name": "octa",
+            "size": 231
+        }, {
+            "name": "os",
+            "size": 172
+        }]
+    }, {
+        "name": "P",
+        "children": [{
+            "name": "please",
+            "size": 911
+        }, {
+            "name": "phone",
+            "size": 374
+        }]
+    }, {
+        "name": "R",
+        "children": [{
+            "name": "rt",
+            "size": 764
+        }]
+    }, {
+        "name": "S",
+        "children": [{
+            "name": "samsung",
+            "size": 341
+        }, {
+            "name": "spark",
+            "size": 284
+        }, {
+            "name": "sports",
+            "size": 187
+        }, {
+            "name": "sony",
+            "size": 180
+        }, {
+            "name": "smartphone",
+            "size": 168
+        }]
+    }, {
+        "name": "T",
+        "children": [{
+            "name": "touchscreen",
+            "size": 190
+        }]
+    }, {
+        "name": "U",
+        "children": [{
+            "name": "update",
+            "size": 1229
+        }, {
+            "name": "using",
+            "size": 182
+        }, {
+            "name": "updated",
+            "size": 176
+        }]
+    }, {
+        "name": "V",
+        "children": [{
+            "name": "vs",
+            "size": 814
+        }, {
+            "name": "volt",
+            "size": 177
+        }]
+    }, {
+        "name": "W",
+        "children": [{
+            "name": "when",
+            "size": 253
+        }]
+    }, {
+        "name": "X",
+        "children": [{
+            "name": "xperia",
+            "size": 324
+        }]
+    }, {
+        "name": "Y",
+        "children": [{
+            "name": "you",
+            "size": 267
+        }, {
+            "name": "your",
+            "size": 176
+        }]
+    }]
+}

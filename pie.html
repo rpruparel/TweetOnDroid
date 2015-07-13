@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>TweetOnDroid</title>
+
+    <link href="websrc/bootstrap.css" rel="stylesheet">
+
+    <link href="websrc/bootstrap-theme.css" rel="stylesheet">
+
+    <link href="websrc/theme.css" rel="stylesheet">
+
+    <script src="websrc/ie-emulation-modes-warning.js"></script>
+    <style>
+        .arc path {
+            stroke: #fff;
+        }
+    </style>
+</head>
+
+<body role="document">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">TweetOnDroid</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Analysis <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header">Word Based Analysis</li>
+                            <li><a href="wcloud.html">Word Cloud</a></li>
+                            <li><a href="hgram.html">Word Histogram Chart</a></li>
+                            <li><a href="ctree.html">Word Collapsible Tree</a></li>
+                            <li><a href="cforce.html">Word Collapsible Force</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Sentiment Based Analysis</li>
+                            <li><a href="pie.html">Sentiment Pie Chart</a></li>
+                            <li><a href="shgram.html">Sentiment Histogram Chart</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+
+    <div class="container theme-showcase" role="main" align="center">
+        <h2 align="center"><u>Sentiment Pie Chart Analysis</u></h2>
+        <h3>A visualization of tweet data on #Android5 and #AndroidLollipop. A higher score indicates a better opinion in the tweet.</h3>
+        <h3 align="cente"><a style="color: #66FFFF">Score 0    </a><a style="color: #4797d6">Score 1   </a>
+        <a style="color: #3b73fc">Score 2   </a><a style="color: #362eb2">Score 3   </a>
+        <a style="color: #521264">Score 4   </a></h3>
+        </ul>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script>
+            var width = 960,
+                height = 500,
+                radius = Math.min(width, height) / 2;
+
+            var color = d3.scale.ordinal()
+                .range(["#66FFFF", "#4797d6", "#3b73fc", "#362eb2", "#521264"]);
+
+            var percentageFormat = d3.format("%");
+
+            var arc = d3.svg.arc()
+                .outerRadius(radius - 10)
+                .innerRadius(0);
+
+            var pie = d3.layout.pie()
+                .sort(null)
+                .value(function(d) {
+                    return d.population;
+                });
+
+            var svg = d3.select("body").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+            d3.csv("data/piedata.csv", function(error, data) {
+
+                var tots = d3.sum(data, function(d) {
+                    return d.population;
+                });
+
+                data.forEach(function(d) {
+                    d.population = +d.population;
+                    d.percentage = d.population / tots;
+                });
+
+                var g = svg.selectAll(".arc")
+                    .data(pie(data))
+                    .enter().append("g")
+                    .attr("class", "arc");
+
+                g.append("path")
+                    .attr("d", arc)
+                    .style("fill", function(d) {
+                        return color(d.data.score);
+                    });
+
+                g.append("text")
+                    .attr("transform", function(d) {
+                        return "translate(" + arc.centroid(d) + ")";
+                    })
+                    .attr("dy", ".35em")
+                    .style("text-anchor", "middle")
+                    .text(function(d) {
+                        //return d.data.score;
+                        return percentageFormat(d.data.percentage);
+                    });
+
+            });
+        </script>
+    </div>
+
+
+    </div>
+    <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="websrc/jquery.js"></script>
+    <script src="websrc/bootstrap.js"></script>
+    <script src="websrc/docs.js"></script>
+    <script src="websrc/ie10-viewport-bug-workaround.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>TweetOnDroid</title>
+
+    <link href="websrc/bootstrap.css" rel="stylesheet">
+
+    <link href="websrc/bootstrap-theme.css" rel="stylesheet">
+
+    <link href="websrc/theme.css" rel="stylesheet">
+
+    <script src="websrc/ie-emulation-modes-warning.js"></script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="websrc/jquery.js"></script>
+    <script src="websrc/bootstrap.js"></script>
+    <script src="websrc/docs.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="websrc/ie10-viewport-bug-workaround.js"></script>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            position: relative;
+            width: 960px;
+        }
+        
+        .axis text {
+            font: 10px sans-serif;
+        }
+        
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+        
+        .bar {
+            fill: steelblue;
+            fill-opacity: .9;
+        }
+        
+        .text {
+            fill: white;
+            font: 10px sans-serif;
+            text-anchor: middle;
+        }
+        
+        .x.axis path {
+            display: none;
+        }
+        
+        label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+
+<body role="document">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">TweetOnDroid</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Analysis <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header">Word Based Analysis</li>
+                            <li><a href="wcloud.html">Word Cloud</a></li>
+                            <li><a href="hgram.html">Word Histogram Chart</a></li>
+                            <li><a href="ctree.html">Word Collapsible Tree</a></li>
+                            <li><a href="cforce.html">Word Collapsible Force</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Sentiment Based Analysis</li>
+                            <li><a href="pie.html">Sentiment Pie Chart</a></li>
+                            <li><a href="shgram.html">Sentiment Histogram Chart</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+
+    <div class="container theme-showcase" role="main">
+        <h2 align="center"><u>Sentiment Histogram Chart Analysis</u></h2>
+        <h3 align="center">A visualization of sentiment analysis on tweet data on #Android5 and #AndroidLollipop. Bars can be arranged by score in increasing order, or
+	alternatively can be arranged by frequency of a particular score.</h3>
+        <p>
+            <input type="checkbox">Sort values</p>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script>
+            var margin = {
+                    top: 20,
+                    right: 20,
+                    bottom: 30,
+                    left: 40
+                },
+                width = 1800 - margin.left - margin.right,
+                height = 600 - margin.top - margin.bottom;
+
+            var formatPercent = d3.format("");
+
+            var x = d3.scale.ordinal()
+                .rangeRoundBands([0, width], .1, 1);
+
+            var y = d3.scale.linear()
+                .range([height, 0]);
+
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .tickFormat(formatPercent);
+
+            var svg = d3.select("body").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            d3.csv("data/piedata.csv", function(error, data) {
+
+                data.forEach(function(d) {
+                    d.population = +d.population;
+                });
+
+                x.domain(data.map(function(d) {
+                    return d.score;
+                }));
+                y.domain([0, d3.max(data, function(d) {
+                    return d.population;
+                })]);
+
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis);
+
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(yAxis)
+                    .append("text")
+                    .attr("transform", "rotate(-90)")
+                    .attr("y", 6)
+                    .attr("dy", ".71em")
+                    .style("text-anchor", "end")
+                    .text("Frequency");
+
+                svg.selectAll(".bar")
+                    .data(data)
+                    .enter().append("rect")
+                    .attr("class", "bar")
+                    .style("fill", "#362eb2")
+                    .attr("x", function(d) {
+                        return x(d.score);
+                    })
+                    .attr("width", x.rangeBand())
+                    .attr("y", function(d) {
+                        return y(d.population);
+                    })
+                    .attr("height", function(d) {
+                        return height - y(d.population)
+
+                        svg.selectAll(".bar")
+                            .data(data)
+                            .enter().append("text")
+                            .attr("class", "bar")
+                            .attr("x", barWidth / 2)
+                            .attr("y", function(d) {
+                                return y(d.value) + 3;
+                            })
+                            .attr("dy", ".75em")
+                            .text(function(d) {
+                                return d.value;
+                            });
+
+                    });
+
+                d3.select("input").on("change", change);
+
+                var sortTimeout = setTimeout(function() {
+                    d3.select("input").property("checked", true).each(change);
+                }, 2000);
+
+                function change() {
+                    clearTimeout(sortTimeout);
+
+                    // Copy-on-write since tweens are evaluated after a delay.
+                    var x0 = x.domain(data.sort(this.checked ? function(a, b) {
+                                return b.population - a.population;
+                            } : function(a, b) {
+                                return d3.ascending(a.score, b.score);
+                            })
+                            .map(function(d) {
+                                return d.score;
+                            }))
+                        .copy();
+
+                    svg.selectAll(".bar")
+                        .sort(function(a, b) {
+                            return x0(a.score) - x0(b.score);
+                        });
+
+                    var transition = svg.transition().duration(750),
+                        delay = function(d, i) {
+                            return i * 50;
+                        };
+
+                    transition.selectAll(".bar")
+                        .delay(delay)
+                        .attr("x", function(d) {
+                            return x0(d.score);
+                        });
+
+                    transition.select(".x.axis")
+                        .call(xAxis)
+                        .selectAll("g")
+                        .delay(delay);
+                }
+            });
+        </script>
+
+
+    </div>
+
+
+    </div>
+    <!-- /container -->
+
+
+
+
+
+</body>
+
+</html>

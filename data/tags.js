@@ -1,0 +1,151 @@
+var tags = [{
+    "key": "update",
+    "value": 1229
+}, {
+    "key": "please",
+    "value": 911
+}, {
+    "key": "ios",
+    "value": 843
+}, {
+    "key": "look",
+    "value": 841
+}, {
+    "key": "vs",
+    "value": 814
+}, {
+    "key": "interesting",
+    "value": 792
+}, {
+    "key": "blog",
+    "value": 789
+}, {
+    "key": "comparision",
+    "value": 788
+}, {
+    "key": "rt",
+    "value": 764
+}, {
+    "key": "lg",
+    "value": 417
+}, {
+    "key": "phone",
+    "value": 374
+}, {
+    "key": "new",
+    "value": 366
+}, {
+    "key": "galaxy",
+    "value": 363
+}, {
+    "key": "now",
+    "value": 347
+}, {
+    "key": "samsung",
+    "value": 341
+}, {
+    "key": "launched",
+    "value": 331
+}, {
+    "key": "xperia",
+    "value": 324
+}, {
+    "key": "nexus",
+    "value": 319
+}, {
+    "key": "note",
+    "value": 296
+}, {
+    "key": "spark",
+    "value": 284
+}, {
+    "key": "you",
+    "value": 267
+}, {
+    "key": "ascend",
+    "value": 254
+}, {
+    "key": "when",
+    "value": 253
+}, {
+    "key": "core",
+    "value": 242
+}, {
+    "key": "google",
+    "value": 242
+}, {
+    "key": "finally",
+    "value": 231
+}, {
+    "key": "octa",
+    "value": 231
+}, {
+    "key": "inch",
+    "value": 217
+}, {
+    "key": "ips",
+    "value": 211
+}, {
+    "key": "gingerbread",
+    "value": 203
+}, {
+    "key": "like",
+    "value": 203
+}, {
+    "key": "Appeal",
+    "value": 201
+}, {
+    "key": "hidden",
+    "value": 201
+}, {
+    "key": "get",
+    "value": 200
+}, {
+    "key": "Nice",
+    "value": 199
+}, {
+    "key": "hd",
+    "value": 196
+}, {
+    "key": "box",
+    "value": 192
+}, {
+    "key": "lcd",
+    "value": 190
+}, {
+    "key": "touchscreen",
+    "value": 190
+}, {
+    "key": "not",
+    "value": 187
+}, {
+    "key": "sports",
+    "value": 187
+}, {
+    "key": "using",
+    "value": 182
+}, {
+    "key": "sony",
+    "value": 180
+}, {
+    "key": "volt",
+    "value": 177
+}, {
+    "key": "updated",
+    "value": 176
+}, {
+    "key": "your",
+    "value": 176
+}, {
+    "key": "os",
+    "value": 172
+}, {
+    "key": "smartphone",
+    "value": 168
+}, {
+    "key": "awesome",
+    "value": 162
+}, {
+    "key": "got",
+    "value": 161
+}];

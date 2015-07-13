@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
+
+    <title>TweetOnDroid</title>
+
+    <link href="websrc/bootstrap.css" rel="stylesheet">
+
+    <link href="websrc/bootstrap-theme.css" rel="stylesheet">
+
+    <link href="websrc/theme.css" rel="stylesheet">
+
+    <script src="websrc/ie-emulation-modes-warning.js"></script>
+    <style>
+        .node circle {
+            cursor: pointer;
+            stroke: #3182bd;
+            stroke-width: 1.5px;
+        }
+        
+        .node text {
+            font: 10px sans-serif;
+            pointer-events: none;
+            text-anchor: middle;
+        }
+        
+        line.link {
+            fill: none;
+            stroke: #9ecae1;
+            stroke-width: 1.5px;
+        }
+    </style>
+</head>
+
+<body role="document">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">TweetOnDroid</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Analysis <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="dropdown-header">Word Based Analysis</li>
+                            <li><a href="wcloud.html">Word Cloud</a></li>
+                            <li><a href="hgram.html">Word Histogram Chart</a></li>
+                            <li><a href="ctree.html">Word Collapsible Tree</a></li>
+                            <li><a href="cforce.html">Word Collapsible Force</a></li>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Sentiment Based Analysis</li>
+                            <li><a href="pie.html">Sentiment Pie Chart</a></li>
+                            <li><a href="shgram.html">Sentiment Histogram Chart</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+
+    <div class="container theme-showcase" role="main">
+        <h2 align="center"><u>Word Collapsible Force Analysis</u></h2>
+        <h3 align="center">A force-based, interactive visualization of words found from tweet data on #Android5 and #AndroidLollipop. Frequencies 
+impact the size of the circles.</h3>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script>
+            var width = 960,
+                height = 500,
+                root;
+
+            var force = d3.layout.force()
+                .linkDistance(80)
+                .charge(-120)
+                .gravity(.05)
+                .size([width, height])
+                .on("tick", tick);
+
+            var svg = d3.select("body").append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+            var link = svg.selectAll(".link"),
+                node = svg.selectAll(".node");
+
+            d3.json("data/cfdata.json", function(error, json) {
+                root = json;
+                update();
+            });
+
+            function update() {
+                var nodes = flatten(root),
+                    links = d3.layout.tree().links(nodes);
+
+                // Restart the force layout.
+                force
+                    .nodes(nodes)
+                    .links(links)
+                    .start();
+
+                // Update links.
+                link = link.data(links, function(d) {
+                    return d.target.id;
+                });
+
+                link.exit().remove();
+
+                link.enter().insert("line", ".node")
+                    .attr("class", "link");
+
+                // Update nodes.
+                node = node.data(nodes, function(d) {
+                    return d.id;
+                });
+
+                node.exit().remove();
+
+                var nodeEnter = node.enter().append("g")
+                    .attr("class", "node")
+                    .on("click", click)
+                    .call(force.drag);
+
+                nodeEnter.append("circle")
+                    .attr("r", function(d) {
+                        return Math.sqrt(d.size) / 10 || 4.5;
+                    });
+
+                nodeEnter.append("text")
+                    .attr("dy", ".35em")
+                    .text(function(d) {
+                        return d.name;
+                    });
+
+                node.select("circle")
+                    .style("fill", color);
+            }
+
+            function tick() {
+                link.attr("x1", function(d) {
+                        return d.source.x;
+                    })
+                    .attr("y1", function(d) {
+                        return d.source.y;
+                    })
+                    .attr("x2", function(d) {
+                        return d.target.x;
+                    })
+                    .attr("y2", function(d) {
+                        return d.target.y;
+                    });
+
+                node.attr("transform", function(d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
+            }
+
+            function color(d) {
+                return d._children ? "#3182bd" // collapsed package
+                    : d.children ? "#c6dbef" // expanded package
+                    : "#fd8d3c"; // leaf node
+            }
+
+            // Toggle children on click.
+            function click(d) {
+                if (d3.event.defaultPrevented) return; // ignore drag
+                if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                } else {
+                    d.children = d._children;
+                    d._children = null;
+                }
+                update();
+            }
+
+            // Returns a list of all nodes under the root.
+            function flatten(root) {
+                var nodes = [],
+                    i = 0;
+
+                function recurse(node) {
+                    if (node.children) node.children.forEach(recurse);
+                    if (!node.id) node.id = ++i;
+                    nodes.push(node);
+                }
+
+                recurse(root);
+                return nodes;
+            }
+        </script>
+    </div>
+
+
+    </div>
+    <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="websrc/jquery.js"></script>
+    <script src="websrc/bootstrap.js"></script>
+    <script src="websrc/docs.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="websrc/ie10-viewport-bug-workaround.js"></script>
+
+
+</body>
+
+</html>
